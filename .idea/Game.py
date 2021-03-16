@@ -7,7 +7,7 @@ class Game:
     South_side = [30,13,1,4,4,10]
     Vest_goal = [0]
     East_goal = [0]
-    Last_Pit= ['player','area',0]
+    Last_Pit= ['player','area',0,0] # returns the[player, area of the last pit, the index, marbles in pit]
     count = 0
     player = None
 
@@ -55,7 +55,7 @@ class Game:
                     print('count s',count)
                     if i == count:
                         south = 's'
-                        Game.Last_Pit=[player,south,(move - 1) - (i + 1)]
+                        Game.Last_Pit=[player,south,(move - 1) - (i + 1),Game.South_side[(move - 1) - (i + 1)]]
                         print('Last pit is',Game.Last_Pit)
                         count = count-(i+1)
                         x=1
@@ -97,7 +97,7 @@ class Game:
                     print('count s',count)
                     if 0 == count:
                         north = 'n'
-                        Game.Last_Pit=[player,north,(move - 1) + (i + 1)]
+                        Game.Last_Pit=[player,north,(move - 1) + (i + 1),Game.North_side[(move - 1) + (i + 1)]]
                         print('Last pit is',Game.Last_Pit)
                         count = count-(i+1)
                         x=1
@@ -138,7 +138,7 @@ class Game:
             #break
             if count==0:
                 goal = 'g'
-                Game.Last_Pit=[player,goal,0]
+                Game.Last_Pit=[player,goal,0,Game.Vest_goal[0]]
                 print('Last pit is',Game.Last_Pit)
                 print('goal count',count)
                 #print('Last pit is', Last_pit)
@@ -151,7 +151,7 @@ class Game:
             Game.North_side[s]  = nextpit + 1
             if (s+1) == count:
                 north = 'n'
-                Game.Last_Pit=[player,north,s]
+                Game.Last_Pit=[player,north,s,Game.North_side[s]]
                 count = count-(s+1)
                 print('Last pit is',Game.Last_Pit)
                 print('count is N1', count)
@@ -168,7 +168,7 @@ class Game:
             Game.South_side[5 - i] = nextpit + 1 # Adding a marbel to the pit
             if i+1 == count:
                 south = 's'
-                Game.Last_Pit=[player,south,(5-i)]
+                Game.Last_Pit=[player,south,(5-i),Game.South_side[5 - i]]
                 count = count-(i+1)
                 print('Last pit is method',Game.Last_Pit, 'count s', count)
                 x=1
@@ -203,7 +203,7 @@ class Game:
                 #break
                 if count==0:
                     goal = 'AIg'
-                    Game.Last_Pit=[player,goal,0]
+                    Game.Last_Pit=[player,goal,0,Game.East_goal[0]]
                     print('Last pit is',Game.Last_Pit)
                     print('goal count',count)
                     #print('Last pit is', Last_pit)
@@ -215,7 +215,7 @@ class Game:
                 Game.South_side[5 - i] = nextpit + 1 # Adding a marbel to the pit
                 if count == 0:
                     south = 's'
-                    Game.Last_Pit=[player,south,(5-i)]
+                    Game.Last_Pit=[player,south,(5-i),Game.South_side[5 - i]]
                     count = count-(i+1)
                     print('Last pit is method',Game.Last_Pit, 'count s', count)
                     break
@@ -231,7 +231,7 @@ class Game:
                 Game.North_side[s]  = nextpit + 1
                 if (s+1) == count:
                     north = 'n'
-                    Game.Last_Pit=[player,north,s]
+                    Game.Last_Pit=[player,north,s,Game.North_side[s]]
                     count = count-(s+1)
                     print('Last pit is',Game.Last_Pit)
                     print('count is N1', count)

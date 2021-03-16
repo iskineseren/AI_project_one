@@ -2,8 +2,8 @@ import numpy as np
 import time
 class Game:
     North_index = [1,2,3,4,5,6]
-    North_side = [6,6,1,3,30,6]
-    South_index = [1,2,3,4,5,6]
+    North_side = [6,5,2,3,40,10]
+    #South_index = [1,2,3,4,5,6]
     South_side = [30,13,1,4,4,10]
     Vest_goal = [0]
     East_goal = [0]
@@ -16,7 +16,7 @@ class Game:
         print('Pit Index', Game.North_index)
         print('')
         print('         ', Game.North_side)
-        print('   V  ', Game.Vest_goal, '                ', Game.East_goal, '  E ')
+        print('   V  ', Game.Vest_goal, '                    ', Game.East_goal, '  E ')
         print('         ', Game.South_side)
         print('')
 
@@ -82,7 +82,7 @@ class Game:
             x = 0
             while i < PitMarbles:
             #print('This is i: ',i)
-            #print('Move',move)
+                print('Move',move)
                 if move == 6:
                     count = PitMarbles
                     print('Lastpit',count)
@@ -95,7 +95,7 @@ class Game:
                     print('i : ', i, 'count : ', count)
                     count = PitMarbles-(i+1)
                     print('count s',count)
-                    if i == count:
+                    if 0 == count:
                         north = 'n'
                         Game.Last_Pit=[player,north,(move - 1) + (i + 1)]
                         print('Last pit is',Game.Last_Pit)
@@ -187,7 +187,6 @@ class Game:
         i = 0
         x = 0
         s = 0
-        x1=1
         print('player in method ', player, "count in method: ", count)
         #count = count
         while count > 0:
@@ -214,7 +213,7 @@ class Game:
                 nextpit = Game.South_side[5 - i] #Getting the value from the next pit
                 print('South side method i: ', i ,'count :', count)
                 Game.South_side[5 - i] = nextpit + 1 # Adding a marbel to the pit
-                if i+1 == count:
+                if count == 0:
                     south = 's'
                     Game.Last_Pit=[player,south,(5-i)]
                     count = count-(i+1)
@@ -226,23 +225,24 @@ class Game:
                     i=0
                     break
                 i+=1
-
             while s < count:
                 nextpit = Game.North_side[s] #Getting the value from the next pit
-                print('north side method s: ', s ,'count :', count)
-                Game.North_side[s] = nextpit + 1 # Adding a marbel to the pit
-                if s+1 == count:
-                    south = 'n'
-                    Game.Last_Pit=[player,south,(5-i)]
+                print('Northside', nextpit,'s:',s, 'count',count)
+                Game.North_side[s]  = nextpit + 1
+                if (s+1) == count:
+                    north = 'n'
+                    Game.Last_Pit=[player,north,s]
                     count = count-(s+1)
-                    print('Last pit is method',Game.Last_Pit, 'count s', count)
+                    print('Last pit is',Game.Last_Pit)
+                    print('count is N1', count)
                     x=1
-                    #print('Last pit is', Last_pit)
                     break
-                if Game.North_side[5] == Game.North_side[0 + s]:
+                if Game.North_side[0 + s] == Game.North_side[5]:
                     count = count-(s+1)
-                    print('AI north method: ', s,' count : ',count )
+                    print('End of North side method. count: ',count,'s:',s)
                     s=0
                     x=0
                     break
-                s+=1
+                s += 1
+
+ ## problems with the North update if more then marbles for a board around

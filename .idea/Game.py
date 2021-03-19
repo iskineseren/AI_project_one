@@ -2,8 +2,8 @@ import numpy as np
 import time
 class Game:
     North_index = [1,2,3,4,5,6]
-    North_side = [6,5,0,3,40,10]
-    South_side = [30,0,1,4,4,10]
+    North_side = [6,5,0,3,40,1]
+    South_side = [6,0,1,4,4,10]
     Vest_goal = [0]
     East_goal = [0]
     Last_Pit= ['player','area',0,0] # returns the[player, area of the last pit, the index, marbles in pit]
@@ -37,11 +37,11 @@ class Game:
             s = 0
             x1=1
 
-            while i < PitMarbles:
+            while i < count:
                 #print('This is i: ',i)
                 #print('Move',move)
                 if move == 1:
-                    count = PitMarbles
+                    #count = PitMarbles
                     print(count)
                     Game.continueBoard(count, player)
                     break
@@ -284,8 +284,5 @@ class Game:
             Game.Vest_goal[0] = vGoal + oppositeSide  # Adding a marble to the Vest Goal
             VGoal2 = Game.Vest_goal[0]
             print('Original goal',vGoal,'updated goal ', VGoal2)
-        elif Game.Last_Pit[0]=='P' and Game.Last_Pit[1]=='g':
-            Play1 = Player()
-            Play1.Move()
         else:
-            print('Oponents turn')
+            print('Nothing to take')

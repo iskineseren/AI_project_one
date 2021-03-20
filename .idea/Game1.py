@@ -55,7 +55,7 @@ class Game1:
                         #x=1
                         #print('Last pit is', Last_pit)
                         break
-                if (i+1) == 5:
+                if (move-1)-(i+1) == 0:
                     count = PitMarbles-(i+1)
                     print('end south first i : ', i,'count ', count, 'player is: ', player)
                     Game1.continueBoard(count, player)
@@ -152,7 +152,7 @@ class Game1:
                     #x=1
                     print('Last marble in north side', Game1.Last_Pit, 'count: ', count)
                     break
-                if (s+1)==6:
+                if (s+1)==6:# something wrong with this I think...
                     count = count-(s+1)
                     print('End of North side method. count: ',count,'s:',s)
                     s=0
@@ -223,9 +223,8 @@ class Game1:
                     print('Last marble in south side', Game1.Last_Pit, 'count', count)
                     break
                 elif (i+1) == 6:
+                    count = count-(i+1)
                     print('End of south: i: ', i,' count : ',count, 'Lastindex is', Game1.South_side[i-5] )
-                    #count = count-(i+1)
-                    #i=0
                     break
                 i+=1
             while s < count:
@@ -242,7 +241,7 @@ class Game1:
                     print('count is N1', count)
                     x=1
                     break
-                if s == 6:
+                if s == 5:
                     count = count-(s+1)
                     print('End of North side method. count: ',count,'s:',s)
                     s=0

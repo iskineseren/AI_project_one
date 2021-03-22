@@ -2,7 +2,7 @@ import numpy as np
 #import Player
 class Game1:
     North_index = [1,2,3,4,5,6]
-    North_side = [1,2,3,4,5,6]
+    North_side = [1,2,3,4,5,1]
     South_side = [6,6,6,6,6,6]
     Vest_goal = [0]
     East_goal = [0]

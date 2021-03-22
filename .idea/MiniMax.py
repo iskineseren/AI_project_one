@@ -1,40 +1,35 @@
 #import Player
-import Game1
+import AIGame
 
 class MiniMax:
-
-    AInorthside = Game1.Game1.North_side
+    player = None
+    # Last_Pit = Game1.Game1.Last_Pit
+    continueGame= True
+    AInorthside = AIGame.AIGame.North_side
+    AIsouthside = AIGame.AIGame.South_side
     #AIgoal = [0, 1, 0, 2, 3, 4]
-    AIgoal = Game1.Game1.East_goal
-    Playersouthside = Game1.Game1.South_side
-    Playergoal = Game1.Game1.Vest_goal
-    indexwithgreatestpayoff = 0
+    AIgoal = AIGame.AIGame.East_goal
+    Playersouthside = AIGame.AIGame.South_side
+    Playergoal = AIGame.AIGame.Vest_goal
+    pit_to_choose = 0
 
     # Get boardstate
-    def BestMove():
-        try:
-            for x in MiniMax.AInorthside:
-                AIgoalmax = max(MiniMax.AIgoal) #maximum-værdi af Eastgoal
-                print("Max value of AIgoal: ", AIgoalmax)
-                indexwithgreatestpayoff = Minimax.AIgoal.index(AIgoalmax) #indeks-nr for eastgoals max-værdi
-                print("Index-nr.: ", indexwithgreatestpayoff)
-
-                return indexwithgreatestpayoff
-
-
-        except Exception as e:
-            print("Exception caught: ", e)
-
-
-    def Move(self):
-        move = MiniMax.indexwithgreatestpayoff
-        Kalaha = Game1.Game1()
-        Kalaha.UpdateBoard('AI', move)
-        Kalaha.Board()
-        print("updated board ")
+    def maxCheck(self):
+            #  for x in MiniMax.AInorthside:
+        i=0
+        while i<6:
+            #print(MiniMax.AInorthside)
+            marbles = MiniMax.AInorthside[i]
+            if marbles == (6-i):
+                print('This is the index to choose', i)
+                MiniMax.pit_to_choose = i
+            elif marbles == 13 and MiniMax.AIsouthside[i] > 1:
+                MiniMax.pit_to_choose = i
+                print('This is the index to choose instead', i)
+            i+=1
 
 
-MiniMax = MiniMax()
-MiniMax.BestMove()
-print(indexwithgreatestpayoff)
+
+
+
 

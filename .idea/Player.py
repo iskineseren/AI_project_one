@@ -1,4 +1,5 @@
 import Game1
+import MiniMax
 class Player:
     player = None
     Last_Pit = Game1.Game1.Last_Pit
@@ -31,8 +32,15 @@ class Player:
 
     def Move(self):
         #print('It is player ',Player.player,)
-        move = input('Choose a pit from your side and type index number')
-        move = int(move)
+        if Player.player =='P':
+            move = input('Choose a pit from your side and type index number')
+            move = int(move)
+        elif Player.player =='AI':
+            M=MiniMax.MiniMax()
+            move = M.maxCheck()
+            move = MiniMax.MiniMax.pit_to_choose
+            move = (move+1)
+
         x = [1,2,3,4,5,6]
         if move not in x:
             print('You have to choose a pit from 1 to 6')

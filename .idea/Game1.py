@@ -2,7 +2,7 @@ import numpy as np
 #import Player
 class Game1:
     North_index = [1,2,3,4,5,6]
-    North_side = [6,6,6,6,6,6]
+    North_side = [1,2,3,4,5,6]
     South_side = [6,6,6,6,6,6]
     Vest_goal = [0]
     East_goal = [0]
@@ -19,8 +19,6 @@ class Game1:
         print('Your goal', Game1.Vest_goal, '                    ', Game1.East_goal, '  AI Goal ')
         print('              ', Game1.South_side)
         print('')
-
-
 
 
     def UpdateBoard(self, player, move):
@@ -69,6 +67,7 @@ class Game1:
         elif (player == 'AI'):
             #print("AI algorithm begins")
             #player=player
+
             PitMarbles = Game1.North_side[move - 1] #Get the value of the pit
 
             count = PitMarbles

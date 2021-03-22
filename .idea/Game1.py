@@ -3,7 +3,7 @@ import numpy as np
 class Game1:
     North_index = [1,2,3,4,5,6]
     North_side = [6,6,6,6,6,6]
-    South_side = [1,0,0,0,0,0]
+    South_side = [6,6,6,6,6,6]
     Vest_goal = [0]
     East_goal = [0]
     Last_Pit= ['player','area',0,0] # returns the[player, area of the last pit, the index, marbles in pit]
@@ -13,11 +13,11 @@ class Game1:
     North_side_status =1
 
     def Board(self): # This create the initial Kalaha board
-        print('Pit Index', Game1.North_index)
+        print('Pit Index     ', Game1.North_index)
         print('')
-        print('         ', Game1.North_side)
-        print('   V  ', Game1.Vest_goal, '                    ', Game1.East_goal, '  E ')
-        print('         ', Game1.South_side)
+        print('              ', Game1.North_side)
+        print('Your goal', Game1.Vest_goal, '                    ', Game1.East_goal, '  AI Goal ')
+        print('              ', Game1.South_side)
         print('')
 
 
@@ -29,7 +29,7 @@ class Game1:
             PitMarbles = Game1.South_side[move - 1] #Get the value of the pit
 
             count = PitMarbles
-            print('Pitmarbles', PitMarbles,'count',count)
+            #print('Pitmarbles', PitMarbles,'count',count)
             Game1.South_side[move - 1] = 0 # replace the number of the pit
             i = 0
             while True:
@@ -194,7 +194,7 @@ class Game1:
         #print('player in method ', player, "count in method: ", count)
         #count = count
         while count > 0:
-            print('count in first while', count)
+            #print('count in first while', count)
             while x <1 :
                 vGoal = Game1.East_goal[0] # Getting the values in the Vest goal
                 #print('Vest goal :', vGoal)
@@ -228,7 +228,7 @@ class Game1:
                     m.CheckLastMarble()
                     m.checkSideStatus()
                     count = count-(i+1)
-                    print('Last marble in south side', Game1.Last_Pit, 'count', count)
+                    #print('Last marble in south side', Game1.Last_Pit, 'count', count)
                     break
                 elif (i+1) == 6:
                     count = count-(i+1)
@@ -237,7 +237,7 @@ class Game1:
                 i+=1
             while s < count:
                 nextpit = Game1.North_side[s] #Getting the value from the next pit
-                print('Northside', nextpit,'s:',s, 'count',count)
+                #print('Northside', nextpit,'s:',s, 'count',count)
                 Game1.North_side[s]  = nextpit + 1
                 if (s+1) == count:
                     north = 'n'
@@ -325,6 +325,6 @@ class Game1:
                 #print('Original goal',vGoal,'updated goal ', VGoal2)
                 i +=1
         else:
-            print('The game is still on y1: ', y1,'y2: ', y2)
+            #print('The game is still on y1: ', y1,'y2: ', y2)
             Game1.South_side_status = y1
             Game1.North_side_status = y2

@@ -58,38 +58,40 @@ class Player:
         while Player.continueGame:
             if Game1.Game1.Last_Pit[0]=='P' and Game1.Game1.Last_Pit[1]=='g':
                 Player.player = 'P'
-                print('P gets to move again player is: ', Player.player)
+                print('You get to move again!') #player is: ', Player.player
                 Play1.Move()
 
             elif Game1.Game1.Last_Pit[0]=='AI' and Game1.Game1.Last_Pit[1]=='AIg':
                 Player.player = 'AI'
-                print("AI gets to move again", Player.player)
+                print("Computer gets to move again")
                 Play1.Move()
 
             elif Game1.Game1.Last_Pit[0]=='P': #and Game1.Game1.Last_Pit[1]=='n':
                 #print("The player is", Player.player)
                 Player.player= 'AI'
-                print("Tha player changes from you to ", Player.player)
+                print('Computer has the turn')
+                #print("The player changes from you to ", Player.player)
                 Play1.Move()
 
             elif Game1.Game1.Last_Pit[0]=='AI':# and Game1.Game1.Last_Pit[1]=='s':
                 #print("The player is", Player.player)
                 Player.player= 'P'
-                print("The player changes to", Player.player)
+                print('Your turn!')
+                #print("The player changes to", Player.player)
                 Play1.Move()
 
     def checkWinner(self):
         x = Game1.Game1.East_goal[0]
         y = Game1.Game1.Vest_goal[0]
         #print('Eastgoal is',x, 'Vestgoal is:', y )
-        if y > 18:
+        if y > 36:
             print('You Win')
             Player.continueGame= False
-        elif x > 18:
+        elif x > 36:
             print('Computer wins')
             Player.continueGame= False
-        else:
-            print('Continue')
+        #else:
+         #   print('Continue')
 
 
 

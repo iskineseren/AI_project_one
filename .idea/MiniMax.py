@@ -34,7 +34,7 @@ def Move(self):
 
 
     def MINIMAX(GameState):
-        # returns index of Pit that AI whoud use for the next move
+        # returns index of Pit that AI whoud use for the next move and the next state that gets created by choosing the pit
         depthlimit = 5                                                                              # mimimaxfunction iterates max step
         ChildGames      = [0]*6
         heuristicValues = [0]*6
@@ -43,6 +43,9 @@ def Move(self):
                 ChildGames[AI_Index] = ChildGames.append(genChildGames(GameState, AI_Index)) 		# list with states for each index
                 depth = 1
                 state = ChildGames[AI_Index]
+                while state.player == 'AI':                                                         # while AI gets to go again, start new minimax iteration
+                    [contiVari, state] = MINIMAX(state)                                             # save new_MINMAX-nextGameState as 'state' to continue original MINMAX
+                    ## maybe it would make sense to set a different depth limit to the recursions -> depthlimit would need to be a input to MINMAX
                 heuristicValues[AI_Index] = minValue(GameState, state ,depth, depthlimit)		                # array with payoff for each index
                     # GameState = actual current state in game
                     # state = ChildGames(AI_Index), calculated belief state
@@ -50,7 +53,8 @@ def Move(self):
         #end for
         # returns index of max payoff -> same than best pit_index to choose from
         indexwithgreatestpayoff = heuristicValues.index(max(heuristicValues))
-        return indexwithgreatestpayoff
+        nextGameState = ChildGames[heuristicValues.index(max(heuristicValues))]
+        return [indexwithgreatestpayoff, nextGameState]
 
     def minValue(GameState, state, depth):
         # returns a utility / heurastic value
@@ -66,6 +70,8 @@ def Move(self):
                     ChildGames_min[MIN_Index] = genChildGames(state,MIN_Index) 			                # array with states for each index
                     depth += 1
                     MIN_state = ChildGames_min[MIN_Index]
+                    while MIN_state.player == 'P':                                                     # while Player gets to go again, start new minimax iteration (in this recursion player is max, AI is min)
+                        [contiVari, MIN_state] = MINIMAX(MIN_state)                                         # save new_MINMAX-nextGameState as 'state' to continue original MINMAX
                     heuristicValues[MIN_Index] = maxValue(GameState, MIN_state, depth, depthlimit)				        # array with payoff for each index
             #end for
             heuristicValue = min(heurasticValues) #gets only updated after 'else' part is ealuated
@@ -86,6 +92,8 @@ def Move(self):
                     ChildGames_max[MAX_Index] = genChildGames(state,MAX_Index) 			                # array with states for each index
                     depth += 1
                     MAX_state = ChildGames_max[MAX_Index]
+                    while MAX_state.player == 'AI':                                                         # while AI gets to go again, start new minimax iteration
+                        [contiTurn, MAX_state] = MINIMAX(MAX_state)                                             # save new_MINMAX-nextGameState as 'state' to continue original MINMAX
                     heuristicValues[MAX_Index] = minValue(GameState, MAX_state, depth, depthlimit)				        # array with payoff for each index
             #end for
             heuristicValue = max(heurasticValues) #gets only updated after 'else' part is ealuated

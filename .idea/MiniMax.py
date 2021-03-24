@@ -25,12 +25,12 @@ import Game1
 #            print("Exception caught: ", e)
 
 
-    def Move(self):
-        move = MiniMax.indexwithgreatestpayoff
-        Kalaha = Game1.Game1()
-        Kalaha.UpdateBoard('AI', move)
-        Kalaha.Board()
-        print("updated board ")
+def Move(self):
+    move = MiniMax.indexwithgreatestpayoff
+    Kalaha = Game1.Game1()
+    Kalaha.UpdateBoard('AI', move)
+    Kalaha.Board()
+    print("updated board ")
 
 
     def MINIMAX(GameState):
@@ -63,17 +63,17 @@ import Game1
             for MIN_Index in range(6):
                 if state.North_side[MIN_Index]  > 0:
                 # for all northern pits with marbles
-                ChildGames_min(MIN_Index) = genChildGames(state,MIN_Index) 			                # array with states for each index
-                depth += 1
-                MIN_state = ChildGames_min[MIN_Index]
-                heuristicValues(MIN_Index) = maxValue(GameState, MIN_state, depth, depthlimit)				        # array with payoff for each index
+                    ChildGames_min[MIN_Index] = genChildGames(state,MIN_Index) 			                # array with states for each index
+                    depth += 1
+                    MIN_state = ChildGames_min[MIN_Index]
+                    heuristicValues[MIN_Index] = maxValue(GameState, MIN_state, depth, depthlimit)				        # array with payoff for each index
             #end for
             heuristicValue = min(heurasticValues) #gets only updated after 'else' part is ealuated
         #end if
         return heuristicValue
 
 
-        def maxValue(GameState, state, depth):
+    def maxValue(GameState, state, depth):
         # returns a utility / heurastic value
         if TERMINAL-TEST(state):                                                                    # function checkts if someone has won in previous step
             heuristicValue = -100									                                # returns positiv value bc max player can finish the game
@@ -83,10 +83,10 @@ import Game1
         else:
             for MAX_Index in range(6):
                 if state.North_side[MAX_Index]  > 0:                                                # for all northern pits with marbles
-                    ChildGames_max(MAX_Index) = genChildGames(state,MAX_Index) 			                # array with states for each index
+                    ChildGames_max[MAX_Index] = genChildGames(state,MAX_Index) 			                # array with states for each index
                     depth += 1
                     MAX_state = ChildGames_max[MAX_Index]
-                    heuristicValues(MAX_Index) = minValue(GameState, MAX_state, depth, depthlimit)				        # array with payoff for each index
+                    heuristicValues[MAX_Index] = minValue(GameState, MAX_state, depth, depthlimit)				        # array with payoff for each index
             #end for
             heuristicValue = max(heurasticValues) #gets only updated after 'else' part is ealuated
         #end if
@@ -115,6 +115,7 @@ import Game1
         else:
             # game is not finished
             return bool(False)
+
 
 
 # MiniMax = MiniMax()

@@ -18,7 +18,7 @@ class AIgame:
         print('              ', south)
         print('')
         obj = [north,south,vest,east,player]
-        AIgame.child.append(obj)
+        AIgame.child=obj
     
 
 
@@ -379,13 +379,26 @@ class AIgame:
         for x in e1:
             e.append(x)
             break
-        state = [n,s,v,e]
+        state = [n,s,v,e, state[4]]
         print('state before child',state)
         move = move+1
         print('this is the move', move)
         Game = AIgame()
-        Game.UpdateBoardAI('AI', state,move)
+        Game.UpdateBoardAI(state[4], state,move)
         child = AIgame.child
+            # update player:
+            # Last_Pit= ['player','area',0,0] # returns the[player, area of the last pit, the index, marbles in pit]
+        if AIgame.Last_Pit[0] == 'AI' and AIgame.Last_Pit[1]== 'AIg':
+            child[4] = 'AI'
+            # AI gets to go again
+        elif AIgame.Last_Pit[0] == 'P' and AIgame.Last_Pit[1]== 'g':
+            child[4] = 'P'
+            # P gets to go again
+        else:   #else change player
+            if child[4] == 'AI':
+                child[4] = 'P'
+            elif child[4] == 'P':
+                child[4] = 'AI'
         print('child is:',child)
         return child
 

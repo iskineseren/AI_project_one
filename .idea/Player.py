@@ -1,4 +1,5 @@
 import Game1
+import MiniMax
 class Player:
     player = None
     Last_Pit = Game1.Game1.Last_Pit

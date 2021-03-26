@@ -3,7 +3,7 @@ import Game1
 import AIgame
 class MiniMax:
 
-#    AInorthside = Game1.Game1.North_side
+#    AInorthside = Game1.Game1.side_pits
 #    #AIgoal = [0, 1, 0, 2, 3, 4]
 #    AIgoal = Game1.Game1.East_goal
 #    Playersouthside = Game1.Game1.South_side
@@ -43,31 +43,46 @@ class MiniMax:
 
 
     def MINIMAX(self,GameState):
-        #GameState = [North_side,South_side,Vest_goal,East_goal,player]
+        #GameState = [side_pits,South_side,Vest_goal,East_goal,player]
         # returns index of Pit that AI whoud use for the next move and the next state that gets created by choosing the pit
+        print('')
+        print('*** MINIMAX FUNCTION START')
+        print('')
         print('inside minimax: state', GameState)
-        North_side = GameState[0]
+        side_pits = []
+        if GameState[4] == 'AI':
+            side_pits = GameState[0]
+        elif GameState[4] == 'P':
+            side_pits = GameState[1]
         ai = AIgame.AIgame()
         depthlimit = 3                                                                              # mimimaxfunction iterates max step
         ChildGames      = []
         heuristicValues = [0]*6
         for AI_Index in range(6):
-            if North_side[AI_Index]  > 0:                                                 # for all northern pits with marbles
-                print('north side in minimax',North_side[AI_Index])
+            print('AI_Index is:',AI_Index)
+            if GameState[4]=='none':
+                break
+            if side_pits[AI_Index]  == 0:
+                ChildGames.append(GameState)
+            elif side_pits[AI_Index]  > 0:                                                 # for all northern pits with marbles
+                print('north side in minimax',side_pits[AI_Index])
                 ch = ai.genChildGames(GameState, AI_Index)
                 #print('child',ch)
                 ChildGames.append(ch) 		# list with states for each index
                 print('child received from genchild',ChildGames)
+                print('AI_Index is ',AI_Index)
                 depth = 1
                 state = ChildGames[AI_Index]                                                 # [0] bc it returns a list inide of a list
                 print('returned state in Minimax',state, 'player is', state[4])
                 while state[4] == 'AI':                                                         # while AI gets to go again, start new minimax iteration
                     minimax = MiniMax
-                    [contiVari, state] = minimax.MINIMAX(state)                                             # save new_MINMAX-nextGameState as 'state' to continue original MINMAX
+                    state = minimax.MINIMAX(state)[1]
+                    #[contiVari, state] = minimax.MINIMAX(state)                                             # save new_MINMAX-nextGameState as 'state' to continue original MINMAX
                     ## maybe it would make sense to set a different depth limit to the recursions -> depthlimit would need to be a input to MINMAX
                 heuristicValues[AI_Index] = MiniMax.minValue(GameState, state ,depth, depthlimit)		                # array with payoff for each index
-                    # GameState = actual current state in game
-                    # state = ChildGames(AI_Index), calculated belief state
+                print('heuristicValues in minimax function:', heuristicValues)
+                # GameState = actual current state in game
+                # state = ChildGames(AI_Index), calculated belief state
             #end if
         #end for
         # returns index of max payoff -> same than best pit_index to choose from
@@ -76,60 +91,100 @@ class MiniMax:
         return [indexwithgreatestpayoff, nextGameState]
 
     def minValue(self, GameState, state, depth, depthlimit):
-        # returns a utility / heurastic value
+        print('*** MIN-VALUE FUNCTION START')
+        print('')
+        print('')
+        # returns a utility / heuristic value
         # state = [North_side,South_side,Vest_goal,East_goal,player]
-        East_goal = state[3][0]
-        Vest_goal = state[2][0]
-        North_side = state[0]
-        South_side = state[1]
+        if state[4] == 'AI':
+            side_pits = state[0]
+            Own_goal = state[3][0]
+            Own_goal_GS = GameState[3][0]
+            Opp_goal = state[2][0]  #opponment's goal
+            Opp_goal_GS = GameState[2][0]  #opponment's GameState goal
+        elif state[4] == 'P':
+            side_pits = state[1]
+            Own_goal = state[2][0]
+            Own_goal_GS = GameState[2][0]
+            Opp_goal = state[3][0]  #opponment's goal
+            Opp_goal_GS = GameState[3][0]  #opponment's GameState goal
         ChildGames_min = []
         heuristicValues = [0]*6
-        if MiniMax.terminalTest(state):                                                                    # function checkts if someone has won in previous step
+        [terminal, state] = MiniMax.terminalTest(state)
+        if terminal: # or depth == depthlimit:
             heuristicValue = 100									                                # returns positiv value bc max player can finish the game
         elif depth == depthlimit:
             # huerastic function: (new marbles in own kalaha) - (new marbles in player's kalaha)
-            heuristicValue = (East_goal - GameState[3][0]) - (Vest_goal - GameState[2][0])
+            heuristicValue = (Own_goal - Own_goal_GS) - (Opp_goal - Opp_goal_GS)
+            print('heuristicValue in min is:', heuristicValue)
         else:
             for MIN_Index in range(6):
-                if South_side[MIN_Index]  > 0:
+                print('MIN_Index is:',MIN_Index)
+                if side_pits[MIN_Index]  == 0:
+                    ChildGames_min.append(state)
+                elif side_pits[MIN_Index]  > 0:
                 # for all northern pits with marbles
                     ChildGames_min.append(AIgame.AIgame().genChildGames(state,MIN_Index)) 			                # array with states for each index
                     depth += 1
                     MIN_state = ChildGames_min[MIN_Index]
-                    while MIN_state[4] == 'P':                                                     # while Player gets to go again, start new minimax iteration (in this recursion player is max, AI is min)
-                        [contiVari, MIN_state] = MINIMAX(MIN_state)                                         # save new_MINMAX-nextGameState as 'state' to continue original MINMAX
+                    while MIN_state[4] == 'P':                                          # while Player gets to go again, start new minimax iteration (in this recursion player is max, AI is min)
+                        minimax = MiniMax
+                        MIN_state = minimax.MINIMAX(MIN_state)[1]
+                        print('state minstate', MIN_state)# save new_MINMAX-nextGameState as 'state' to continue original MINMAX
                     heuristicValues[MIN_Index] = MiniMax.maxValue(GameState, MIN_state, depth, depthlimit)				        # array with payoff for each index
+                    print('heuristicValues in min function:', heuristicValues)
             #end for
-            heuristicValue = min(heurasticValues) #gets only updated after 'else' part is ealuated
+            heuristicValue = min(heuristicValues) #gets only updated after 'else' part is ealuated
         #end if
         return heuristicValue
 
 
     def maxValue(self, GameState, state, depth, depthlimit):
-        # returns a utility / heurastic value
-        East_goal = state[3][0]
-        Vest_goal = state[2][0]
-        North_side = state[0]
-        South_side = state[1]
+        print('*** MAX VALUE FUNCTION START')
+        print('')
+        print('')
+        # returns a utility / heuristic value
+        # state = [North_side,South_side,Vest_goal,East_goal,player]
+        if state[4] == 'AI':
+            side_pits = state[0]
+            Own_goal = state[3][0]
+            Own_goal_GS = GameState[3][0]
+            Opp_goal = state[2][0]  #opponment's goal
+            Opp_goal_GS = GameState[2][0]  #opponment's GameState goal
+        elif state[4] == 'P':
+            side_pits = state[1]
+            Own_goal = state[2][0]
+            Own_goal_GS = GameState[2][0]
+            Opp_goal = state[3][0]  #opponment's goal
+            Opp_goal_GS = GameState[3][0]  #opponment's GameState goal
         ChildGames_max = []
         heuristicValues = [0]*6
-        if MiniMax.terminalTest(state):                                                                   # function checkts if someone has won in previous step
+        #if MiniMax.terminalTest(state) or depth == depthlimit:                                                                  # function checkts if someone has won in previous step
+        [terminal, state] = MiniMax.terminalTest(state)
+        if terminal: # or depth == depthlimit:
             heuristicValue = -100									                                # returns positiv value bc max player can finish the game
         elif depth == depthlimit:
             # huerastic function: (new marbles in own kalaha) - (new marbles in player's kalaha)
-            heuristicValue = (East_goal - GameState[3][0]) - (Vest_goal - GameState[2][0])
+            heuristicValue = (Own_goal - Own_goal_GS) - (Opp_goal - Opp_goal_GS)
+            print('heuristicValue in max is:', heuristicValue)
         else:
             for MAX_Index in range(6):
-                if North_side[MAX_Index]  > 0:                                                # for all northern pits with marbles
+                print('MAX_Index is:',MAX_Index)
+                if side_pits[MAX_Index]  == 0:
+                    ChildGames_max.append(state)
+                elif side_pits[MAX_Index]  > 0:                                                # for all northern pits with marbles
                     ChildGames_max.append(AIgame.AIgame().genChildGames(state,MAX_Index))			                # array with states for each index
                     depth += 1
-                    MAX_state = ChildGames_max[MAX_Index][0]
+                    MAX_state = ChildGames_max[MAX_Index]
                     while MAX_state[4] == 'AI':                                                         # while AI gets to go again, start new minimax iteration
-                        [contiTurn, MAX_state] = MINIMAX(MAX_state)                                             # save new_MINMAX-nextGameState as 'state' to continue original MINMAX
+                        minimax = MiniMax
+                        state = minimax.MINIMAX(state)[1]                                              # save new_MINMAX-nextGameState as 'state' to continue original MINMAX
                     heuristicValues[MAX_Index] = MiniMax.minValue(GameState, MAX_state, depth, depthlimit)				        # array with payoff for each index
+                    print('heuristicValues in max function:', heuristicValues)
             #end for
-            heuristicValue = max(heurasticValues) #gets only updated after 'else' part is ealuated
+            heuristicValue = max(heuristicValues) #gets only updated after 'else' part is ealuated
         #end if
+            print('heuristic value is:', heuristicValue)
         return heuristicValue
 
 
@@ -142,13 +197,15 @@ class MiniMax:
         South_side = state[1]
         if East_goal > 36 or Vest_goal > 36 or Vest_goal+Vest_goal == 72:
             # if someone has more than half of all marbles in goal, or all marbles are gone
-            return bool(True)
+            state[4] = 'none'
+            return [bool(True), state]
         elif North_side == [0,0,0,0,0,0] or South_side == [0,0,0,0,0,0]:
             # if somene has no marbles left to play
-            return bool(True)
+            state[4] = 'none'
+            return [bool(True), state]
         else:
             # game is not finished
-            return bool(False)
+            return [bool(False), state]
 
 
 

@@ -340,6 +340,7 @@ class AIgame:
                 VGoal2 = East_goal[0]
                 #print('Original goal',vGoal,'updated goal ', VGoal2)
                 i +=1
+                AIgame.Last_Pit[1]='n'
         elif (y2 == 0):
             North_side_status = 0
             South_side_status = 0
@@ -353,6 +354,7 @@ class AIgame:
                 VGoal2 = Vest_goal[0]
                 #print('Original goal',vGoal,'updated goal ', VGoal2)
                 i +=1
+                AIgame.Last_Pit[1]='n'
         else:
             #print('The game is still on y1: ', y1,'y2: ', y2)
             South_side_status = y1

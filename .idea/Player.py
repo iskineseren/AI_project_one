@@ -86,6 +86,7 @@ class Player:
                 #print("The player is", Player.player)
                 Player.player= 'P'
                 print('Your turn!')
+                print('')
                 #print("The player changes to", Player.player)
                 Play1.Move()
 

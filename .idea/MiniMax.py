@@ -180,7 +180,6 @@ class MiniMax:
             # huerastic function: (new marbles in own kalaha) - (new marbles in player's kalaha)
             heuristicValue = (Opp_goal - Opp_goal_GS) - (Own_goal - Own_goal_GS)
             print('heuristicValue in max is:', heuristicValue)
-            print(' ')
         else:
             for MAX_Index in range(6):
                 print('MAX_Index is:',MAX_Index)

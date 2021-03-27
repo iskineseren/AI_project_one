@@ -58,7 +58,6 @@ class Player:
             Kalaha.Board()
             #print("updated board ")
             #print('The player is: ',Player.player, 'Move is: ', move)
-            print(' ')
     def Turn(self):
         #print('Status of Northside', Game1.Game1.North_side_status,'Status of South side', Game1.Game1.South_side_status)
         Play1 = Player()

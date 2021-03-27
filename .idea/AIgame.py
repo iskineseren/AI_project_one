@@ -11,12 +11,12 @@ class AIgame:
     North_side_status =1
 
     def state(self, north, south, vest, east,player):
-        print('Pit Index     ', AIgame.index)
-        print('')
-        print('              ', north)
-        print('Your goal', vest, '                    ', east, '  AI Goal ')
-        print('              ', south)
-        print('')
+        # print('Pit Index     ', AIgame.index)
+        # print('')
+        # print('              ', north)
+        # print('Your goal', vest, '                    ', east, '  AI Goal ')
+        # print('              ', south)
+        # print('')
         obj = [north,south,vest,east,player]
         AIgame.child=obj
     
@@ -40,7 +40,7 @@ class AIgame:
         e = []
         for x in e1:
             e.append(x)
-        print(n,s,v,e)
+        #print(n,s,v,e)
 
         if (player == 'P'):
             #player=player
@@ -238,7 +238,7 @@ class AIgame:
                     m.CheckLastMarble(North_side, South_side, Vest_goal, East_goal)
                     m.checkSideStatus(North_side, South_side, Vest_goal, East_goal)
                     m.state(North_side, South_side, Vest_goal, East_goal,player)
-                    print('Last marble in East goal', AIgame.Last_Pit)
+                    #print('Last marble in East goal', AIgame.Last_Pit)
                     #print('goal count',count)
                     #print('Last pit is', Last_pit)
                     break
@@ -256,7 +256,7 @@ class AIgame:
                     m.checkSideStatus(North_side, South_side, Vest_goal, East_goal)
                     m.state(North_side, South_side, Vest_goal, East_goal,player)
                     count = count-(i+1)
-                    print('Last marble in south side', AIgame.Last_Pit, 'count', count)
+                    #print('Last marble in south side', AIgame.Last_Pit, 'count', count)
                     break
                 elif (i+1) == 6:
                     count = count-(i+1)
@@ -265,7 +265,7 @@ class AIgame:
                 i+=1
             while s < count:
                 nextpit = North_side[s] #Getting the value from the next pit
-                print('Northside', nextpit,'s:',s, 'count',count)
+                #print('Northside', nextpit,'s:',s, 'count',count)
                 North_side[s]  = nextpit + 1
                 if (s+1) == count:
                     north = 'n'
@@ -292,25 +292,25 @@ class AIgame:
 
     def CheckLastMarble(self,North_side, South_side, Vest_goal, East_goal):
         if AIgame.Last_Pit[0] == 'AI' and AIgame.Last_Pit[1]== 'n' and AIgame.Last_Pit[3]==1:
-            print('AI can take the opposite marbles from index', AIgame.Last_Pit[2])
+            #print('AI can take the opposite marbles from index', AIgame.Last_Pit[2])
             oppositeSide = South_side[AIgame.Last_Pit[2]] #Getting the value from the other side
-            print('Marbles from opposite side ', oppositeSide)
+            #print('Marbles from opposite side ', oppositeSide)
             South_side[AIgame.Last_Pit[2]] = 0 # replacing with zero
             eGoal = East_goal[0] # Getting the values in the Vest goal
             #print('Vest goal :', vGoal)
             East_goal[0] = eGoal + oppositeSide  # Adding a marble to the Vest Goal
             eGoal2 = East_goal[0]
-            print('Original goal',eGoal,'updated goal ', eGoal2)
+            #print('Original goal',eGoal,'updated goal ', eGoal2)
         elif AIgame.Last_Pit[0] == 'P' and AIgame.Last_Pit[1]== 's' and AIgame.Last_Pit[3]==1:
-            print('you can take the opposite marbles from index', AIgame.Last_Pit[2])
+            #print('you can take the opposite marbles from index', AIgame.Last_Pit[2])
             oppositeSide = North_side[AIgame.Last_Pit[2]] #Getting the value from the other side
-            print('Marbles from opposite side ', oppositeSide)
+            #print('Marbles from opposite side ', oppositeSide)
             North_side[AIgame.Last_Pit[2]] = 0 # replacing with zero
             vGoal = Vest_goal[0] # Getting the values in the Vest goal
             #print('Vest goal :', vGoal)
             Vest_goal[0] = vGoal + oppositeSide  # Adding a marble to the Vest Goal
             VGoal2 = Vest_goal[0]
-            print('Original goal',vGoal,'updated goal ', VGoal2)
+            #print('Original goal',vGoal,'updated goal ', VGoal2)
         #else:
         #   print('Nothing to take')
 
@@ -328,7 +328,7 @@ class AIgame:
         #print(y1, y2)
 
         if (y1 ==0):
-            print('You have no more marbles on your side. Game is finished')
+            #print('You have no more marbles on your side. Game is finished')
             North_side_status = 0
             South_side_status = 0
             while  i < 6:
@@ -382,9 +382,9 @@ class AIgame:
             e.append(x)
             break
         state = [n,s,v,e, state[4]]
-        print('state before child',state)
+        #print('state before child',state)
         move = move+1
-        print('this is the move', move)
+        #print('this is the move', move)
         Game = AIgame()
         Game.UpdateBoardAI(state[4], state,move)
         child = AIgame.child
@@ -401,7 +401,7 @@ class AIgame:
                 child[4] = 'P'
             elif child[4] == 'P':
                 child[4] = 'AI'
-        print('child is:',child)
+        #print('child is:',child)
         return child
 
         #Game.generateMinchild(leaf)

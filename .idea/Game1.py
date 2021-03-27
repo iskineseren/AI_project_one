@@ -4,7 +4,7 @@ class Game1:
 
     North_index = [1,2,3,4,5,6]
     North_side = [6,6,6,6,6,6]
-    South_side = [6,6,6,6,5,6]
+    South_side = [6,6,6,6,6,6]
     Vest_goal = [0]
     East_goal = [0]
     Last_Pit= ['player','area',0,0] # returns the[player, area of the last pit, the index, marbles in pit]

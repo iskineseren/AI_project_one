@@ -38,10 +38,13 @@ class Player:
         elif Player.player =='AI':
             MiniMaxOBJ = MiniMax.MiniMax()
             m = MiniMaxOBJ.getInitialstate()
-            depthlimit = 5
+            depthlimit = 4
+            print('')
+            print('')
+            print('*** AI thinks ***')
             move = MiniMaxOBJ.MINIMAX(m, depthlimit)
             move = move[0]
-            print('index is', move)
+            print('picked index is', move+1)
             move = (move+1)
         x = [1,2,3,4,5,6]
         if move not in x:
@@ -62,7 +65,7 @@ class Player:
         #print('Status of Northside', Game1.Game1.North_side_status,'Status of South side', Game1.Game1.South_side_status)
         Play1 = Player()
         #print(Player.continueGame)
-        Play.checkWinner()
+        Play1.checkWinner()
         #print(Player.continueGame)
         while Player.continueGame:
             if Game1.Game1.Last_Pit[0]=='P' and Game1.Game1.Last_Pit[1]=='g':

@@ -69,7 +69,7 @@ class AIgame:
                         south = 's'
                         AIgame.Last_Pit=[player, south, (move - 1) - (i + 1), s[(move - 1) - (i + 1)]]
                         m=AIgame()
-                        m.CheckLastMarble(n, s, v, e)
+                        [n,s,v,e]=m.CheckLastMarble(n, s, v, e)
                         m.checkSideStatus(n, s, v, e)
                         m.state(n, s, v, e,player)
                         count = count-(i+1)
@@ -117,7 +117,8 @@ class AIgame:
                         #print('Last marble landed', AIgame.Last_Pit)
                         #print('Put the side values in the child', AIgame.child)
                         m=AIgame()
-                        m.CheckLastMarble(n, s, v, e)
+                        #North_side, South_side, Vest_goal, East_goal
+                        [n,s,v,e]=m.CheckLastMarble(n, s, v, e)
                         m.checkSideStatus(n, s, v, e)
                         m.state(n, s, v, e,player)
                         count = count-(i+1)
@@ -156,7 +157,8 @@ class AIgame:
                     goal = 'g'
                     AIgame.Last_Pit=[player, goal, 0, Vest_goal[0]]
                     m=AIgame()
-                    m.CheckLastMarble(North_side, South_side, Vest_goal, East_goal)
+                    #North_side, South_side, Vest_goal, East_goal
+                    [North_side,South_side,Vest_goal,East_goal]=m.CheckLastMarble(North_side, South_side, Vest_goal, East_goal)
                     m.checkSideStatus(North_side, South_side, Vest_goal, East_goal)
                     m.state(North_side, South_side, Vest_goal, East_goal,player)
                     #print('Last marble in vestgoal', AIgame.Last_Pit)
@@ -174,7 +176,7 @@ class AIgame:
                     north = 'n'
                     AIgame.Last_Pit=[player, north, s, North_side[s]]
                     m=AIgame()
-                    m.CheckLastMarble(North_side, South_side, Vest_goal, East_goal)
+                    [North_side,South_side,Vest_goal,East_goal]=m.CheckLastMarble(North_side, South_side, Vest_goal, East_goal)
                     m.checkSideStatus(North_side, South_side, Vest_goal, East_goal)
                     m.state(North_side, South_side, Vest_goal, East_goal,player)
                     count = count-(s+1)
@@ -196,7 +198,7 @@ class AIgame:
                     south = 's'
                     AIgame.Last_Pit=[player, south, (5 - i), South_side[5 - i]]
                     m=AIgame()
-                    m.CheckLastMarble(North_side, South_side, Vest_goal, East_goal)
+                    [North_side,South_side,Vest_goal,East_goal]=m.CheckLastMarble(North_side, South_side, Vest_goal, East_goal)
                     m.checkSideStatus(North_side, South_side, Vest_goal, East_goal)
                     m.state(North_side, South_side, Vest_goal, East_goal,player)
                     count = count-(i+1)
@@ -235,9 +237,10 @@ class AIgame:
                     goal = 'AIg'
                     AIgame.Last_Pit=[player, goal, 0, East_goal[0]]
                     m=AIgame()
-                    m.CheckLastMarble(North_side, South_side, Vest_goal, East_goal)
-                    m.checkSideStatus(North_side, South_side, Vest_goal, East_goal)
-                    m.state(North_side, South_side, Vest_goal, East_goal,player)
+                    [N,S,V,E]=m.CheckLastMarble(North_side, South_side, Vest_goal, East_goal)
+                    #North_side, South_side, Vest_goal, East_goal
+                    m.checkSideStatus(N, S, V, E)
+                    m.state(N, S, V, E,player)
                     #print('Last marble in East goal', AIgame.Last_Pit)
                     #print('goal count',count)
                     #print('Last pit is', Last_pit)
@@ -252,9 +255,9 @@ class AIgame:
                     south = 's'
                     AIgame.Last_Pit=[player, south, (5 - i), South_side[5 - i]]
                     m=AIgame()
-                    m.CheckLastMarble(North_side, South_side, Vest_goal, East_goal)
-                    m.checkSideStatus(North_side, South_side, Vest_goal, East_goal)
-                    m.state(North_side, South_side, Vest_goal, East_goal,player)
+                    [N,S,V,E]=m.CheckLastMarble(North_side, South_side, Vest_goal, East_goal)
+                    m.checkSideStatus(N, S, V, E)
+                    m.state(N, S, V, E,player)
                     count = count-(i+1)
                     #print('Last marble in south side', AIgame.Last_Pit, 'count', count)
                     break
@@ -271,7 +274,7 @@ class AIgame:
                     north = 'n'
                     AIgame.Last_Pit=[player, north, s, North_side[s]]
                     m=AIgame()
-                    m.CheckLastMarble(North_side, South_side, Vest_goal, East_goal)
+                    [North_side,South_side,Vest_goal,East_goal] = m.CheckLastMarble(North_side, South_side, Vest_goal, East_goal)
                     m.checkSideStatus(North_side, South_side, Vest_goal, East_goal)
                     m.state(North_side, South_side, Vest_goal, East_goal,player)
                     count = count-(s+1)
@@ -300,7 +303,12 @@ class AIgame:
             #print('Vest goal :', vGoal)
             East_goal[0] = eGoal + oppositeSide  # Adding a marble to the Vest Goal
             eGoal2 = East_goal[0]
-            #print('Original goal',eGoal,'updated goal ', eGoal2)
+            s = South_side
+            n= North_side
+            v= Vest_goal
+            e= East_goal
+            print('Original goal calculated in minimax',eGoal,'updated goal ', eGoal2)
+            return [n,s,v,e]
         elif AIgame.Last_Pit[0] == 'P' and AIgame.Last_Pit[1]== 's' and AIgame.Last_Pit[3]==1:
             #print('you can take the opposite marbles from index', AIgame.Last_Pit[2])
             oppositeSide = North_side[AIgame.Last_Pit[2]] #Getting the value from the other side
@@ -310,7 +318,15 @@ class AIgame:
             #print('Vest goal :', vGoal)
             Vest_goal[0] = vGoal + oppositeSide  # Adding a marble to the Vest Goal
             VGoal2 = Vest_goal[0]
-            #print('Original goal',vGoal,'updated goal ', VGoal2)
+            print('Original goal in minimax',vGoal,'updated goal ', VGoal2)
+            s = South_side
+            n= North_side
+            v= Vest_goal
+            e= East_goal
+            return [n,s,v,e]
+        else:
+            return [North_side,South_side,Vest_goal,East_goal]
+
         #else:
         #   print('Nothing to take')
 
@@ -404,98 +420,4 @@ class AIgame:
         #print('child is:',child)
         return child
 
-        #Game.generateMinchild(leaf)
-    # def getInitialstate(self):
-    #     #This is the same as Gamestate in MiniMax
-    #     G = Game1.Game1()
-    #     n1 = G.getNorth()
-    #     North_side=[]
-    #     for x in n1:
-    #         #print(x)
-    #         n.append(x)
-    #     s1 = G.getSouth()
-    #     South_side = []
-    #     for x in s1:
-    #         s.append(x)
-    #     v1 = G.getVest()
-    #     Vest_goal = []
-    #     for x in v1:
-    #         v.append(x)
-    #     e1 = G.getEast()
-    #     East_goal = []
-    #     for x in e1:
-    #         e.append(x)
-    #     GameState = [North_side,South_side,Vest_goal,East_goal]
-    #     return GameState
 
-    # def generateMinchild(self, state,player):
-    #     #north,east,south,vest
-    #     print('states received to generateMinchild ', state)
-    #     state_nodes = len(state)
-    #     print('How many states? : ', state_nodes)
-    #     #player = 'P'
-    #     for x in state:
-    #         minchild = x
-    #         print('minchild :', minchild)
-    #         n1 = minchild[0]
-    #         print('State n', n1)
-    #         n=[]
-    #         for x in n1:
-    #             #print(x)
-    #             n.append(x)
-    #         s1 = minchild[2]
-    #         s = []
-    #         for x in s1:
-    #             s.append(x)
-    #         print(s)
-    #         v1 = minchild[3]
-    #         v = []
-    #         for x in v1:
-    #             v.append(x)
-    #         e1 = minchild[1]
-    #         e = []
-    #         for x in e1:
-    #             e.append(x)
-    #             print('inside Minchild n, e, s, v', n, e, s, v)
-    #         state = [n,s,v,e]
-    #         Game = AIgame()
-    #         move = Game.legalMove(state,player)
-    #         print('move in childMin', move)
-    #     for i in move:
-    #         move = (i+1)
-    #         print('this is the move', move)
-    #         Game = AIgame()
-    #         Game.UpdateBoardAI(player, state,move)
-
-
-    # def legalMove(self, state, player):
-    #     move = []
-    #     if player=='P':
-    #         n=state[0]
-    #         print('state north in leagalmove',n)
-    #         i=0
-    #         while i <5:
-    #             x = n[i]
-    #             print('marbles in legalmoves P', x)
-    #             if x > 0:
-    #                 move.append(i+1)
-    #                 print ('marbles',x, 'i',i)
-    #                 return move
-    #             i+=1
-    #     elif player=='AI':
-    #           s= state[1]
-    #           print('state south in leagalmove AI',s)
-    #           i=0
-    #           while i <5:
-    #               x = s[i]
-    #               print('marbles are', x)
-    #               if i > 0:
-    #                 move.append(i+1)
-    #                 print ('marbles',x, 'i',i)
-    #                 return move
-    #               i+=1
-
-
-# Game = AIgame()
-# s=Game.getInitialstate()
-# l=Game.generateMaxchild(s,'AI')

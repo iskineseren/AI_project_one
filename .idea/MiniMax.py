@@ -34,17 +34,13 @@ class MiniMax:
         GameState = [North_side,South_side,Vest_goal,East_goal,player]
         return GameState
 
-    # def Move(self):
-    #     move = MiniMax.indexwithgreatestpayoff
-    #     Kalaha = Game1.Game1()
-    #     Kalaha.UpdateBoard('AI', move)
-    #     Kalaha.Board()
-    #     print("updated board ")
-
 
     def MINIMAX(self, GameState, depthlimit):
         #GameState = [side_pits,South_side,Vest_goal,East_goal,player]
         # returns index of Pit that AI whoud use for the next move and the next state that gets created by choosing the pit
+        #print('')
+        #print('')
+        #print('*** MINIMAX FUNCTION START')
         #print('inside minimax: state', GameState)
         side_pits = []
         if GameState[4] == 'AI':
@@ -57,9 +53,7 @@ class MiniMax:
         #depthlimit = 3                                                                              # mimimaxfunction iterates max step
         ChildGames      = []
         heuristicValues = [0]*6
-        #while True:
-            #if GameState[4] == 'none':
-                #return False
+
         for AI_Index in range(6):
                 #print('AI_Index is:',AI_Index)
                 if side_pits[AI_Index]  == 0:

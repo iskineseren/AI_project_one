@@ -1,5 +1,6 @@
 import Game1
 import MiniMax
+import time
 class Player:
     player = None
     Last_Pit = Game1.Game1.Last_Pit
@@ -36,16 +37,17 @@ class Player:
             move = input('Choose a pit from your side and type index number')
             move = int(move)
         elif Player.player =='AI':
+            print('Computer calculates move, please wait')
+            time.sleep( 2 )
             MiniMaxOBJ = MiniMax.MiniMax()
             m = MiniMaxOBJ.getInitialstate()
             depthlimit = 4
-            print('')
-            print('')
-            print('*** AI thinks ***')
             move = MiniMaxOBJ.MINIMAX(m, depthlimit)
             move = move[0]
             print('picked index is', move+1)
             move = (move+1)
+            print('Computer chooses pit to move: ', move)
+
         x = [1,2,3,4,5,6]
         if move not in x:
             print('You have to choose a pit from 1 to 6')
@@ -67,7 +69,7 @@ class Player:
         #print(Player.continueGame)
         Play1.checkWinner()
         #print(Player.continueGame)
-        while Player.continueGame:
+        while Play1.continueGame:
             if Game1.Game1.Last_Pit[0]=='P' and Game1.Game1.Last_Pit[1]=='g':
                 Player.player = 'P'
                 print('You get to move again!') #player is: ', Player.player

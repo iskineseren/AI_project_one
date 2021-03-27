@@ -84,6 +84,7 @@ class MiniMax:
                     heuristicValues[AI_Index] = MiniMax.minValue(GameState, state ,depth, depthlimit)		                # array with payoff for each index
                     print('heuristicValues in minimax function:', heuristicValues)
                     print('depht is:', depth)
+                    print('hi')
                     # GameState = actual current state in game
                     # state = ChildGames(AI_Index), calculated belief state
                 #end if

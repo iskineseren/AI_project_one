@@ -307,7 +307,7 @@ class AIgame:
             n= North_side
             v= Vest_goal
             e= East_goal
-            print('Original goal calculated in minimax',eGoal,'updated goal ', eGoal2)
+            #print('Original goal calculated in minimax',eGoal,'updated goal ', eGoal2)
             return [n,s,v,e]
         elif AIgame.Last_Pit[0] == 'P' and AIgame.Last_Pit[1]== 's' and AIgame.Last_Pit[3]==1:
             #print('you can take the opposite marbles from index', AIgame.Last_Pit[2])
@@ -318,7 +318,7 @@ class AIgame:
             #print('Vest goal :', vGoal)
             Vest_goal[0] = vGoal + oppositeSide  # Adding a marble to the Vest Goal
             VGoal2 = Vest_goal[0]
-            print('Original goal in minimax',vGoal,'updated goal ', VGoal2)
+            #print('Original goal in minimax',vGoal,'updated goal ', VGoal2)
             s = South_side
             n= North_side
             v= Vest_goal

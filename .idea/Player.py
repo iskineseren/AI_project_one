@@ -36,11 +36,13 @@ class Player:
             move = input('Choose a pit from your side and type index number')
             move = int(move)
         elif Player.player =='AI':
-            M=MiniMax.MiniMax()
-            move = M.maxCheck()
-            move = MiniMax.MiniMax.pit_to_choose
+            MiniMaxOBJ = MiniMax.MiniMax()
+            m = MiniMaxOBJ.getInitialstate()
+            depthlimit = 5
+            move = MiniMaxOBJ.MINIMAX(m, depthlimit)
+            move = move[0]
+            print('index is', move)
             move = (move+1)
-
         x = [1,2,3,4,5,6]
         if move not in x:
             print('You have to choose a pit from 1 to 6')

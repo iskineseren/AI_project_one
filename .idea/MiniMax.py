@@ -34,15 +34,15 @@ class MiniMax:
         GameState = [North_side,South_side,Vest_goal,East_goal,player]
         return GameState
 
-    def Move(self):
-        move = MiniMax.indexwithgreatestpayoff
-        Kalaha = Game1.Game1()
-        Kalaha.UpdateBoard('AI', move)
-        Kalaha.Board()
-        print("updated board ")
+    # def Move(self):
+    #     move = MiniMax.indexwithgreatestpayoff
+    #     Kalaha = Game1.Game1()
+    #     Kalaha.UpdateBoard('AI', move)
+    #     Kalaha.Board()
+    #     print("updated board ")
 
 
-    def MINIMAX(self,GameState, depthlimit):
+    def MINIMAX(self, GameState, depthlimit):
         #GameState = [side_pits,South_side,Vest_goal,East_goal,player]
         # returns index of Pit that AI whoud use for the next move and the next state that gets created by choosing the pit
         print('')
@@ -78,12 +78,12 @@ class MiniMax:
                     state = ChildGames[AI_Index]                                                 # [0] bc it returns a list inide of a list
                     print('returned state in Minimax',state, 'player is', state[4])
                     while state[4] == playerVar:                                                         # while AI gets to go again, start new minimax iteration
-                        minimax = MiniMax
-                        state = minimax.MINIMAX(state, 0)[1]
-                    heuristicValues[AI_Index] = MiniMax.minValue(GameState, state ,depth, depthlimit)		                # array with payoff for each index
+                        #minimax = MiniMax.MiniMax()
+                        depthlimitInWhile = 0
+                        state = MiniMax().MINIMAX(state, depthlimitInWhile)[1]
+                    heuristicValues[AI_Index] = MiniMax().minValue(GameState, state ,depth, depthlimit)		                # array with payoff for each index
                     print('heuristicValues in minimax function:', heuristicValues)
                     print('depht is:', depth)
-                    print('hi')
                     # GameState = actual current state in game
                     # state = ChildGames(AI_Index), calculated belief state
                 #end if
@@ -118,7 +118,7 @@ class MiniMax:
             playerVar = 'P'
         ChildGames_min = []
         heuristicValues = [0]*6
-        [terminal, state] = MiniMax.terminalTest(state)
+        [terminal, state] = MiniMax().terminalTest(state)
         depth += 1
         if terminal: # or depth == depthlimit:
             heuristicValue = 100									                                # returns positiv value bc max player can finish the game
@@ -137,10 +137,11 @@ class MiniMax:
                     print('depth in minvalue:', depth)
                     MIN_state = ChildGames_min[MIN_Index]
                     while MIN_state[4] == playerVar:                                          # while Player gets to go again, start new minimax iteration (in this recursion player is max, AI is min)
-                        minimax = MiniMax
-                        MIN_state = minimax.MINIMAX(MIN_state, 0)[1]
+                        #minimax = MiniMax.MiniMax()
+                        depthlimitInWhile = 0
+                        MIN_state = MiniMax().MINIMAX(MIN_state, depthlimitInWhile)[1]
                         print('state minstate', MIN_state)# save new_MINMAX-nextGameState as 'state' to continue original MINMAX
-                    heuristicValues[MIN_Index] = MiniMax.maxValue(GameState, MIN_state, depth, depthlimit)				        # array with payoff for each index
+                    heuristicValues[MIN_Index] = MiniMax().maxValue(GameState, MIN_state, depth, depthlimit)				        # array with payoff for each index
                     print('heuristicValues in min function:', heuristicValues)
             #end for
             heuristicValue = min(heuristicValues) #gets only updated after 'else' part is ealuated
@@ -171,7 +172,7 @@ class MiniMax:
         ChildGames_max = []
         heuristicValues = [0]*6
         #if MiniMax.terminalTest(state) or depth == depthlimit:                                                                  # function checkts if someone has won in previous step
-        [terminal, state] = MiniMax.terminalTest(state)
+        [terminal, state] = MiniMax().terminalTest(state)
         depth += 1
         if terminal: # or depth == depthlimit:
             heuristicValue = -100									                                # returns positiv value bc max player can finish the game
@@ -189,9 +190,10 @@ class MiniMax:
                     print('depht in maxvalue',depth)
                     MAX_state = ChildGames_max[MAX_Index]
                     while MAX_state[4] == playerVar:                                                         # while AI gets to go again, start new minimax iteration
-                        minimax = MiniMax
-                        MAX_state = minimax.MINIMAX(MAX_state, 0)[1]                                              # save new_MINMAX-nextGameState as 'state' to continue original MINMAX
-                    heuristicValues[MAX_Index] = MiniMax.minValue(GameState, MAX_state, depth, depthlimit)				        # array with payoff for each index
+                        #minimax = MiniMax.MiniMax()
+                        depthlimitInWhile = 0
+                        MAX_state = MiniMax().MINIMAX(MAX_state, depthlimitInWhile)[1]                                              # save new_MINMAX-nextGameState as 'state' to continue original MINMAX
+                    heuristicValues[MAX_Index] = MiniMax().minValue(GameState, MAX_state, depth, depthlimit)				        # array with payoff for each index
                     print('heuristicValues in max function:', heuristicValues)
             #end for
             heuristicValue = max(heuristicValues) #gets only updated after 'else' part is ealuated
@@ -219,11 +221,4 @@ class MiniMax:
             # game is not finished
             return [bool(False), state]
 
-
-
-MiniMax = MiniMax()
-m = MiniMax.getInitialstate()
-depthlimit = 5
-result = MiniMax.MINIMAX(m, depthlimit)
-print(result)
 

@@ -33,18 +33,25 @@ class Player:
 
     def Move(self):
         #print('It is player ',Player.player,)
+        Play2 = Player()
+        #print(Player.continueGame)
+        Play2.checkWinner()
         if Player.player =='P':
             move = input('Choose a pit from your side and type index number')
             move = int(move)
+            MiniMaxOBJ = MiniMax.MiniMax()
+            MiniMaxOBJ.clearHistory()
+            print('clear history',MiniMax.MiniMax.indexToChoose)
         elif Player.player =='AI':
             print('Computer calculates move, please wait')
             time.sleep( 2 )
             MiniMaxOBJ = MiniMax.MiniMax()
+            MiniMaxOBJ.clearHistory()
             m = MiniMaxOBJ.getInitialstate()
-            depthlimit = 4
-            move = MiniMaxOBJ.MINIMAX(m, depthlimit)
-            move = move[0]
-            print('picked index is', move+1)
+            depthlimit = 3
+            move1 = MiniMaxOBJ.MINIMAX(m, depthlimit)
+            move1 = move1[2]
+            move = int(move1)
             move = (move+1)
             print('Computer chooses pit to move: ', move)
 
@@ -97,7 +104,7 @@ class Player:
     def checkWinner(self):
         x = Game1.Game1.East_goal[0]
         y = Game1.Game1.Vest_goal[0]
-        #print('Eastgoal is',x, 'Vestgoal is:', y )
+        print('Eastgoal is',x, 'Vestgoal is:', y )
         if y > 36:
             print('You Win')
             Player.continueGame= False

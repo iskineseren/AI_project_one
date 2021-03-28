@@ -73,10 +73,14 @@ class MiniMax:
                     depth = 0
                     state = ChildGames[AI_Index]
                     checkNorth = state[0]
+                    checkEast1 = state[3]
+                    #print('east: ',checkEast1)
+                    for x in checkEast1:
+                         checkEast = int(x)
                     #print('state in minimax',checkNorth)# [0] bc it returns a list inide of a list
-                    if sum(checkNorth) ==0:
+                    if sum(checkNorth) ==0 or checkEast>36:
                         MiniMax.indexToChoose = AI_Index
-                    #print('returned state in Minimax',state, 'player is', state[4])
+                        #print('index in the end of game: ',MiniMax.indexToChoose)
                     while state[4] == playerVar:                                                         # while AI gets to go again, start new minimax iteration
                         #minimax = MiniMax.MiniMax()
                         depthlimitInWhile = 0

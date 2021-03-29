@@ -41,7 +41,7 @@ class Player:
             move = int(move1)
             MiniMaxOBJ = MiniMax.MiniMax()
             MiniMaxOBJ.clearHistory()
-            print('clear history',MiniMax.MiniMax.indexToChoose)
+            #print('clear history',MiniMax.MiniMax.indexToChoose)
             x = [1,2,3,4,5,6]
             if move not in x:
                 print('You have to choose a pit from 1 to 6')

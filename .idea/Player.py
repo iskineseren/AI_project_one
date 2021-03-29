@@ -67,6 +67,7 @@ class Player:
             move = int(move1)
             move = (move+1)
             print('Computer chooses pit to move nr: ', move)
+            print(' ')
             Kalaha = Game1.Game1()
             Kalaha.UpdateBoard(Player.player, move)
             Kalaha.Board()

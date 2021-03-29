@@ -28,7 +28,7 @@ class MiniMax:
             East_goal.append(e)
         player = 'AI'
         GameState = [North_side,South_side,Vest_goal,East_goal,player]
-        MiniMax.originalSide=North_side
+        MiniMax.originalSide = North_side
         return GameState
 
     def clearHistory(self):
@@ -177,7 +177,7 @@ class MiniMax:
             for MAX_Index in range(6):
                 #print('MAX_Index is:',MAX_Index)
                 if MiniMax.originalSide[MAX_Index]  > 0:
-                    #print('marbles in original pit', MiniMax.originalSide[MAX_Index])
+                    print('marbles in original pit', MiniMax.originalSide[MAX_Index])
                     maxpayoff = (Own_goal-Own_goal_GS)-(Opp_goal-Opp_goal_GS)
                     MiniMax.maxPayofflist.append(maxpayoff)
                     MiniMax.maxpayoffindex.append(AI_Index)
